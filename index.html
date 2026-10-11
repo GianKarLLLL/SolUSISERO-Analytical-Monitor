@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolUSISERO– Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0f7f4;
+      --sidebar-bg: #e8f5ee;
+      --card-bg: #ffffff;
+      --primary: #22c55e;
+      --primary-dark: #16a34a;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --radius: 16px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 240px;
+      background: var(--sidebar-bg);
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      border-right: 1px solid #d1e7dd;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 36px;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-section {
+      margin-bottom: 28px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+      padding-left: 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 4px;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .nav-item.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .toggle-switch {
+      width: 42px;
+      height: 24px;
+      background: #d1d5db;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-switch.on {
+      background: var(--primary);
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch.on::after {
+      transform: translateX(18px);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      flex: 1;
+      padding: 24px 28px;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+
+    .header-left h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .header-left p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 14px;
+      width: 260px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      width: 100%;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .search-box input::placeholder {
+      color: #9ca3af;
+    }
+
+    .search-btn {
+      background: var(--primary);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
+
+    .search-btn svg {
+      width: 16px;
+      height: 16px;
+      color: white;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    .icon-btn .badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a7f3d0, #6ee7b7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 2px solid white;
+      box-shadow: var(--shadow);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ===== TOP STATS ROW ===== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .stat-unit {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .gauge-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 4px;
+    }
+
+    .gauge {
+      width: 90px;
+      height: 50px;
+      position: relative;
+    }
+
+    .gauge svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    /* Weather card special */
+    .weather-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .weather-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .weather-temp {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .weather-icon {
+      font-size: 28px;
+    }
+
+    .weather-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .weather-nav button {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .weather-nav .date {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 0 4px;
+    }
+
+    /* ===== MIDDLE SECTION ===== */
+    .middle-row {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .card-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toggles {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mini-toggle {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .mini-toggle .sw {
+      width: 28px;
+      height: 16px;
+      border-radius: 8px;
+      background: #d1d5db;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .mini-toggle .sw.on {
+      background: #a78bfa;
+    }
+
+    .mini-toggle .sw.on.yellow { background: #fbbf24; }
+    .mini-toggle .sw.on.blue { background: #3b82f6; }
+
+    .mini-toggle .sw::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.15s;
+    }
+
+    .mini-toggle .sw.on::after {
+      transform: translateX(12px);
+    }
+
+    .period-tabs {
+      display: flex;
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .period-tabs button {
+      border: none;
+      background: transparent;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .period-tabs button.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .select-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: white;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* Chart placeholders (zero data) */
+    .chart-area {
+      height: 200px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 180px;
+      width: 100%;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e5e7eb;
+      position: relative;
+    }
+
+    .bar-group {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 100%;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .bar {
+      width: 8px;
+      border-radius: 3px 3px 0 0;
+      background: #e5e7eb;
+      height: 2px; /* zero height visual */
+      min-height: 2px;
+    }
+
+    .bar.yellow { background: #fbbf24; }
+    .bar.blue { background: #3b82f6; }
+    .bar.purple { background: #a78bfa; }
+
+    .x-labels {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      padding: 0 4px;
+    }
+
+    .y-label {
+      position: absolute;
+      left: -8px;
+      top: 0;
+      bottom: 24px;
+      width: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: right;
+      transform: translateX(-100%);
+    }
+
+    /* Pie chart */
+    .pie-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      position: relative;
+    }
+
+    .pie {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: conic-gradient(#e5e7eb 0% 100%);
+      position: relative;
+    }
+
+    .pie::after {
+      content: '';
+      position: absolute;
+      inset: 28px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .pie-legend {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .pie-legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pie-legend .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ===== BOTTOM ROW ===== */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.7fr;
+      gap: 18px;
+    }
+
+    .line-chart {
+      height: 160px;
+      position: relative;
+      margin-top: 8px;
+    }
+
+    .line-chart svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .line-x-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      padding: 0 4px;
+    }
+
+    /* Battery card */
+    .battery-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .battery-info {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .battery-visual {
+      position: relative;
+      width: 70px;
+      height: 120px;
+      border: 4px solid #374151;
+      border-radius: 8px;
+      margin: 12px 0;
+      background: #f3f4f6;
+      overflow: hidden;
+    }
+
+    .battery-visual::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 8px;
+      background: #374151;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .battery-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0%; /* zero */
+      background: linear-gradient(to top, #22c55e, #4ade80);
+      transition: height 0.3s;
+    }
+
+    .battery-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      color: #9ca3af;
+      z-index: 2;
+    }
+
+    .battery-percent {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bottom-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      .battery-card {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 200px;
+      }
+      .middle-row {
+        grid-template-columns: 1fr;
+      }
+      .bottom-row {
+        grid-template-columns: 1fr;
+      }
+      .battery-card {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 16px;
+        gap: 8px;
+      }
+      .logo {
+        width: 100%;
+        margin-bottom: 12px;
+      }
+      .nav-section {
+        margin-bottom: 0;
+      }
+      .sidebar-footer {
+        margin-top: 0;
+        margin-left: auto;
+      }
+      .main {
+        max-height: none;
+      }
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .search-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">SolUSISERO Analytical Monitor</div>
+
+    <div class="nav-section">
+      <div class="nav-label">MENU</div>
+      <a href="#" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/>
+        </svg>
+        Analysis
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>
+        </svg>
+        Report
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">SETTINGS</div>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        My Account
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        Support
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="theme-toggle">
+        <div class="toggle-switch on" id="themeToggle"></div>
+        <span>Light Mode</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1>Dashboard</h1>
+        <p>View all information & live status about solar power system</p>
+      </div>
+      <div class="header-right">
+        <div class="search-box">
+          <input type="text" placeholder="Search" />
+          <button class="search-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+          </button>
+        </div>
+        <button class="icon-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span class="badge"></span>
+        </button>
+        <div class="avatar">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#059669">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Stats -->
+    <div class="stats-row">
+      <!-- Efficiency -->
+      <div class="stat-card">
+        <h3>Solar Panel Efficiency</h3>
+        <div class="gauge-container">
+          <div>
+            <div class="stat-value"><span id="efficiency">0</span><span class="stat-unit">%</span></div>
+          </div>
+          <div class="gauge">
+            <svg viewBox="0 0 100 55">
+              <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+              <path id="efficiencyArc" d="M10 50 A40 40 0 0 1 10 50" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> High</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#fbbf24"></span> Moderate</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Low</div>
+        </div>
+      </div>
+
+      <!-- Power Generation -->
+      <div class="stat-card">
+        <h3>Solar Power Generation</h3>
+        <div class="gauge-container">
+          <div>
+            <div class="stat-value"><span id="solarPower">0</span><span class="stat-unit"> kW</span></div>
+          </div>
+          <div class="gauge">
+            <svg viewBox="0 0 100 55">
+              <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+              <path id="powerArc" d="M10 50 A40 40 0 0 1 10 50" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> High</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#fbbf24"></span> Moderate</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Low</div>
+        </div>
+      </div>
+
+      <!-- Energy Consumption -->
+      <div class="stat-card">
+        <h3>Energy Consumption</h3>
+        <div class="gauge-container">
+          <div>
+            <div class="stat-value"><span id="energyConsumption">0</span><span class="stat-unit"> kWh</span></div>
+          </div>
+          <div class="gauge">
+            <svg viewBox="0 0 100 55">
+              <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+              <path id="consumptionArc" d="M10 50 A40 40 0 0 1 10 50" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> High</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#fbbf24"></span> Moderate</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Low</div>
+        </div>
+      </div>
+
+      <!-- Weather / Temperature -->
+      <div class="stat-card weather-card">
+        <div class="weather-top">
+          <div>
+            <h3>Weather today</h3>
+            <div class="weather-temp"><span id="temp">0</span>°C</div>
+          </div>
+          <div class="weather-icon">☁️</div>
+        </div>
+        <div class="weather-nav">
+          <button>‹</button>
+          <span class="date">...</span>
+          <button>›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Row -->
+    <div class="middle-row">
+      <!-- Device Performance -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Device Performance</div>
+          <div class="card-controls">
+            <div class="toggles">
+              <div class="mini-toggle">
+                <span>Panels</span>
+                <div class="sw on yellow"></div>
+              </div>
+              <div class="mini-toggle">
+                <span>Invertors</span>
+                <div class="sw on blue"></div>
+              </div>
+              <div class="mini-toggle">
+                <span>Batteries</span>
+                <div class="sw on"></div>
+              </div>
+            </div>
+            <div class="period-tabs">
+              <button>Day</button>
+              <button class="active">Week</button>
+              <button>Month</button>
+            </div>
+            <select class="select-box">
+              <option>Last 14 Days</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-area" style="padding-left: 36px;">
+          <div class="y-label">
+            <span>20</span><span>16</span><span>12</span><span>8</span><span>4</span><span>0</span>
+          </div>
+          <div class="bar-chart">
+            <!-- 14 groups of zero-height bars -->
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="bar-group"><div class="bar yellow"></div><div class="bar blue"></div><div class="bar purple"></div></div>
+            <div class="x-labels">
+              <span>Day 1</span><span>Day 2</span><span>Day 3</span><span>Day 4</span><span>Day 5</span>
+              <span>Day 6</span><span>Day 7</span><span>Day 8</span><span>Day 9</span><span>Day 10</span>
+              <span>Day 11</span><span>Day 12</span><span>Day 13</span><span>Day 14</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Energy Contribution -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Energy Contribution</div>
+          <div class="card-controls">
+            <select class="select-box">
+              <option>Jan</option>
+            </select>
+            <select class="select-box">
+              <option>2023</option>
+            </select>
+          </div>
+        </div>
+        <div class="pie-container">
+          <div class="pie"></div>
+          <div class="pie-legend">
+            <span><span class="dot" style="background:#22c55e"></span> Solar Power</span>
+            <span><span class="dot" style="background:#3b82f6"></span> Grid Electricity</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="bottom-row">
+      <!-- Solar Power Generation Line -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Solar Power Generation</div>
+          <div class="card-controls">
+            <div class="period-tabs">
+              <button class="active">Day</button>
+              <button>Week</button>
+              <button>Month</button>
+            </div>
+            <select class="select-box">
+              <option>Last 7 Days</option>
+            </select>
+          </div>
+        </div>
+        <div class="line-chart">
+          <svg viewBox="0 0 400 140" preserveAspectRatio="none">
+            <!-- Grid lines -->
+            <line x1="0" y1="20" x2="400" y2="20" stroke="#f3f4f6" stroke-width="1"/>
+            <line x1="0" y1="50" x2="400" y2="50" stroke="#f3f4f6" stroke-width="1"/>
+            <line x1="0" y1="80" x2="400" y2="80" stroke="#f3f4f6" stroke-width="1"/>
+            <line x1="0" y1="110" x2="400" y2="110" stroke="#f3f4f6" stroke-width="1"/>
+            <!-- Zero line (flat) -->
+            <polyline points="20,120 60,120 100,120 140,120 180,120 220,120 260,120 300,120 340,120 380,120"
+                      fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Area fill (none / zero) -->
+            <polygon points="20,120 60,120 100,120 140,120 180,120 220,120 260,120 300,120 340,120 380,120 380,140 20,140"
+                     fill="rgba(59,130,246,0.08)"/>
+          </svg>
+        </div>
+        <div class="line-x-labels">
+          <span>Day 1</span><span>Day 2</span><span>Day 3</span><span>Day 4</span>
+          <span>Day 5</span><span>Day 6</span><span>Day 7</span>
+        </div>
+      </div>
+
+      <!-- Energy Consumption Line -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Energy Consumption</div>
+          <div class="card-controls">
+            <div class="period-tabs">
+              <button class="active">Day</button>
+              <button>Week</button>
+              <button>Month</button>
+            </div>
+            <select class="select-box">
+              <option>Last 7 Days</option>
+            </select>
+          </div>
+        </div>
+        <div class="line-chart">
+          <svg viewBox="0 0 400 140" preserveAspectRatio="none">
+            <line x1="0" y1="20" x2="400" y2="20" stroke="#f3f4f6" stroke-width="1"/>
+            <line x1="0" y1="50" x2="400" y2="50" stroke="#f3f4f6" stroke-width="1"/>
+            <line x1="0" y1="80" x2="400" y2="80" stroke="#f3f4f6" stroke-width="1"/>
+            <line x1="0" y1="110" x2="400" y2="110" stroke="#f3f4f6" stroke-width="1"/>
+            <!-- Red dashed threshold -->
+            <line x1="0" y1="40" x2="400" y2="40" stroke="#fca5a5" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <!-- Zero line -->
+            <polyline points="20,120 60,120 100,120 140,120 180,120 220,120 260,120 300,120 340,120 380,120"
+                      fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polygon points="20,120 60,120 100,120 140,120 180,120 220,120 260,120 300,120 340,120 380,120 380,140 20,140"
+                     fill="rgba(239,68,68,0.08)"/>
+          </svg>
+        </div>
+        <div class="line-x-labels">
+          <span>Day 1</span><span>Day 2</span><span>Day 3</span><span>Day 4</span>
+          <span>Day 5</span><span>Day 6</span><span>Day 7</span>
+        </div>
+      </div>
+
+      <!-- Battery Level -->
+      <div class="card battery-card">
+        <div class="card-title" style="align-self:flex-start;">Battery Level</div>
+        <div class="battery-info">
+          State of Health : <span id="batteryHealth">0</span>%<br>
+          Warning Level : &lt; 30%
+        </div>
+        <div class="battery-visual">
+          <div class="battery-fill" id="batteryFill"></div>
+          <div class="battery-icon">⚡</div>
+        </div>
+        <div class="battery-percent"><span id="batteryLevel">0</span>%</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // UI interactions (theme, tabs, toggles)
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      this.classList.toggle('on');
+    });
+
+    document.querySelectorAll('.period-tabs').forEach(tabs => {
+      tabs.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabs.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    });
+
+    document.querySelectorAll('.mini-toggle .sw').forEach(sw => {
+      sw.addEventListener('click', () => sw.classList.toggle('on'));
+    });
+
+    // ===== Live telemetry from ESP32 (copied & adapted) =====
+    let displayedEfficiency = null;
+
+    async function updateData() {
+      try {
+        const response = await fetch("/api/data");
+
+        if (!response.ok) {
+          throw new Error("HTTP Error: " + response.status);
+        }
+
+        const data = await response.json();
+        console.log("Telemetry received:", data);
+
+        // Temperature → Weather card
+        if (data.temperature !== undefined) {
+          document.getElementById("temp").textContent =
+            Number(data.temperature).toFixed(1);
+        }
+
+        // Solar Power (convert W → kW for display)
+        if (data.solar_power !== undefined) {
+          const kw = Number(data.solar_power) / 1000;
+          document.getElementById("solarPower").textContent = kw.toFixed(2);
+        }
+
+        // Energy Consumption (W shown as kWh placeholder – adjust if your API unit differs)
+        if (data.energy_consumption !== undefined) {
+          document.getElementById("energyConsumption").textContent =
+            Number(data.energy_consumption).toFixed(1);
+        }
+
+        // Solar Efficiency (smooth animation)
+        if (data.solar_efficiency !== undefined) {
+          const targetEfficiency = Number(data.solar_efficiency);
+
+          if (displayedEfficiency === null) {
+            displayedEfficiency = targetEfficiency;
+          }
+
+          displayedEfficiency += (targetEfficiency - displayedEfficiency) * 0.05;
+
+          document.getElementById("efficiency").textContent =
+            displayedEfficiency.toFixed(1);
+        }
+
+        // Optional: voltage → could map to battery if desired
+        // Optional: device name, wifi_rssi, uptime logged only
+        console.log("WiFi RSSI:", data.wifi_rssi);
+        console.log("Uptime:", data.uptime);
+        console.log("Device:", data.device);
+
+      } catch (error) {
+        console.error("Telemetry error:", error);
+        // Keep showing last known / zero values – do not change UI colors
+      }
+    }
+
+    // First update + every second
+    updateData();
+    setInterval(updateData, 1000);
+  </script>
+</body>
+</html>
